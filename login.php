@@ -1,6 +1,20 @@
 <?php
     require_once "config.php";
 
+    /* Kerberos authentication */
+    /* 
+    $handle = kadm5_init_with_password("afs-1", "ICHAT.MN", "admin/admin", $_POST['password']);
+
+    $attributes = KRB5_KDB_REQUIRES_PRE_AUTH | KRB5_KDB_DISALLOW_PROXIABLE;
+    $options = array(KADM5_PRINC_EXPIRE_TIME => 0,
+                     KADM5_POLICY => "default",
+                     KADM5_ATTRIBUTES => $attributes);
+
+    $options = kadm5_get_principal($handle, "bulgaa@ICHAT.MN" );
+
+    foreach ($options as $key => $value) {
+            echo "$key: $value<br />\n";
+    } */
 
     class Result {}
     $response = new Result();
