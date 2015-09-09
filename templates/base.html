@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    {% block head %}
+        <title>{% block title %} {% endblock %} {{ title }} </title>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta name="keywords" content="chat, Mongolia" />
+        <meta name="description" content="ichat.mn">
+        <meta name="author" content="ichat.mn">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- GOOGLE FONTS -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600' rel='stylesheet' type='text/css'>
+        <!-- /GOOGLE FONTS -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/icomoon.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/mystyles.css">
+        <link rel="stylesheet" href="css/hippie-blue.css"/> 
+
+    {% endblock %}
+
+</head>
+
+<body class="boxed">
+
+    <!-- FACEBOOK WIDGET -->
+    <div id="fb-root"></div>
+   
+    <!-- /FACEBOOK WIDGET -->
+    <div class="global-wrap" >
+        <div class="mfp-with-anim mfp-hide mfp-dialog mfp-search-dialog" id="search-dialog1">
+                <h3>Add new topic</h3>
+                <form id="add-new" action="add.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-paw input-icon input-icon-highlight"></i>
+                        <label>Topic name</label>
+                        <input class="form-control" placeholder="name" type="text" name="name" id="name" required/>
+                    </div>
+                    <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-paper-plane input-icon input-icon-highlight"></i>
+                        <label>Topic description?</label>
+                        <textarea class="form-control" placeholder="Long description" type="text" name="desc_more" id="desc_more" /></textarea>
+                    </div>
+                    <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-file-image-o input-icon input-icon-highlight"></i>
+                        <label>Image</label>
+                        <input class="form-control" name="import" id="import" type="file" required/>
+                    </div>
+                    <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-highlight"></i>
+                        <label>Topic location?</label>
+                        <input class="typeahead form-control" name="location" placeholder="City, Airport, Point of Interest, Hotel Name or U.S. Zip Code" type="text" required />
+                    </div>
+                    <div class="input-daterange" data-date-format="M d, D">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
+                                    <label>From</label>
+                                    <input class="form-control" name="start" type="text" required />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
+                                    <label>To</label>
+                                    <input class="form-control" name="end" type="text"  required/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group form-group-lg form-group-select-plus">
+                                    <label>Category</label>
+                                    <select class="form-control" name="category">
+                                        {% for category in categories %}
+                                            <option>{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <input class="btn btn-primary btn-lg" type="submit" name="submit" value="Let's add it" />
+                </form>
+        </div>
+        <header id="main-header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="top-user-area clearfix" style="margin-top:10px">
+                                <a class="logo" href="index.php" style="color:white; font-size:20px">
+                                    <i class="fa fa-send-o"></i>    iChat.mn 
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            
+                        </div>
+                        <div class="col-md-5" style="float:right">
+                            <div class="top-user-area clearfix">
+                                <ul class="top-user-area-list list list-horizontal list-border">
+                                    <li>
+                                        {% if user %}
+                                            <a class="popup-text" href="#search-dialog1" data-effect="mfp-zoom-out">
+                                                + Add topic
+                                           </a>
+                                       {% else %}
+                                            <a href="index.php?cid=0">
+                                                + Add topic
+                                           </a>
+                                       {% endif %}
+                                    </li>
+                                    <li>
+                                        {% if user %}
+                                            <a href="user-profile.html">
+                                                My topics
+                                            </a>
+                                       {% endif %}
+                                    </li>
+                                    <li class="top-user-area-avatar">
+                                       {% if user %}
+                                            <a class="popup-text" href="#search-dialog1" data-effect="mfp-zoom-out">
+                                                <input id="user_name" type="hidden" value="{{user}}" />
+                                                <a href="user-profile.html">Hi, {{user}}</a>
+                                           </a>
+                                       {% else %}
+                                             <input id="user_name" type="hidden" value="0" />
+                                            <a href="index.php?cid=0">
+                                                Login | Signup
+                                           </a>
+                                       {% endif %}                                        
+                                    </li>
+                                    {% if user %}
+                                        <li><a id="logout" href="#">Sign Out</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="nav">
+                    
+                </div>
+            </div>
+        </header>
+        {% block content %}
+
+        {% endblock %}
+        {% block footer %}
+            <footer id="main-footer">
+                <div class="container">
+                    <div class="row row-wrap">
+                        <div class="col-md-12" >
+                            2015 iChat.mn
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+        {% block scripting %}
+            <script src="js/modernizr.js"></script>
+            <script src="js/jquery.js"></script>
+            <script src="js/bootstrap.js"></script>
+            <script src="js/slimmenu.js"></script>
+            <script src="js/bootstrap-datepicker.js"></script>
+            <script src="js/bootstrap-timepicker.js"></script>
+            <script src="js/nicescroll.js"></script>
+            <script src="js/dropit.js"></script>
+            <script src="js/ionrangeslider.js"></script>
+            <script src="js/icheck.js"></script>
+            <script src="js/fotorama.js"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+            <script src="js/typeahead.js"></script>
+            <script src="js/card-payment.js"></script>
+            <script src="js/magnific.js"></script>
+            <script src="js/owl-carousel.js"></script>
+            <script src="js/fitvids.js"></script>
+            <script src="js/tweet.js"></script>
+            <script src="js/countdown.js"></script>
+            <script src="js/gridrotator.js"></script>
+            <script src="js/custom.js"></script>
+            <script src="js/jquery.validate.min.js"></script>
+         {% endblock %}
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,82 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="container">
+            <h3 class="page-title">Login/Register on iChat.mn</h3>
+        </div>
+
+        <div class="gap"></div>
+        <div class="container">
+            <div class="row" data-gutter="60">
+                <div class="col-md-4">
+                    <h3>Welcome to iChat.mn</h3>
+                    <p>Euismod nunc porta magna elementum penatibus amet gravida sit ligula odio id nunc proin sem augue quis posuere interdum in sapien congue rutrum scelerisque sociosqu cubilia ridiculus et luctus mollis</p>
+                    <p>Praesent est semper massa lobortis quisque lectus ridiculus hac eget</p>
+                </div>
+                <div class="col-md-4">
+                    <h3>Login</h3>
+                    <form id="login"  method="post" enctype="multipart/form-data">
+                        <div class="form-group form-group-icon-left"><i class="fa fa-user input-icon input-icon-show"></i>
+                            <label>Email</label>
+                            <input class="form-control" placeholder="e.g. johndoe@gmail.com" type="text" id="email"/>
+                        </div>
+                        <div class="form-group form-group-icon-left"><i class="fa fa-lock input-icon input-icon-show"></i>
+                            <label>Password</label>
+                            <input class="form-control" type="password" placeholder="my secret password" id="password"/>
+                        </div>
+                        <input class="btn btn-primary" type="button" value="Sign in" />
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <h3>New To iChat.mn?</h3>
+                    <form id="add-user" enctype="multipart/form-data">
+                        <div class="form-group form-group-icon-left"><i class="fa fa-user input-icon input-icon-show"></i>
+                            <label>Username</label>
+                            <input class="form-control" placeholder="e.g. John Doe" type="text" required id="reg_username"/>
+                        </div>
+                        <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
+                            <label>Email</label>
+                            <input class="form-control" placeholder="e.g. johndoe@gmail.com" type="text" requierd id="reg-email" />
+                        </div>
+                        <div class="form-group form-group-icon-left"><i class="fa fa-lock input-icon input-icon-show"></i>
+                            <label>Password</label>
+                            <input class="form-control" type="password" placeholder="my secret password" required id="reg-password"/>
+                        </div>
+                        <input class="btn btn-primary" type="submit" value="Sign up for iChat.mn" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+{% block scripting %}
+    {{parent()}}
+    <script type="text/javascript">
+        
+        $('#login').click(function(){
+           $.post("login.php", {
+                email: $('#email').val(),
+                password: $('#password').val()
+                }, function (result) {
+                    var arr = result.split('>');
+                    var message = $.parseJSON(arr[1]);
+                    if(message.message != 0){
+                        window.location.replace("index.php");
+                    }else{
+                        alert("Wrong username password");
+                    }
+            });
+        });
+        $('#add-user').submit(function(){
+           $.post("user.php", {
+                email: $('#reg-email').val(),
+                username: $('#reg-username').val(),
+                password: $('#reg-password').val()
+                }, function (result) {
+                console.log(result);
+            });
+        });
+
+    </script>
+{% endblock %}
