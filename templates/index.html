@@ -78,6 +78,7 @@
                                         </div> 
                                     {% endfor %}
                                 </li>
+                                <!--
                                 <li>
                                     <h5 class="booking-filters-title">Most</h5>
                                     <div class="checkbox">
@@ -100,7 +101,7 @@
                                             <input class="i-check" type="checkbox" />Your favorite
                                         </label>
                                     </div>
-                                </li>
+                                </li>-->
                             </ul>
                         </aside>
                     </form>
@@ -172,20 +173,16 @@
             //alert("1");
             var name = $("#user_name").val();
             var topic = $("#topic").text();
-            if(name!="0"){
                $.post("generate.php", {
                     cid:id,
                     user: name,
                     topic: topic 
                     }, function (result) {
                         var arr = result.split('"');
-                        alert("One time password: "+arr[1]);
                         var url = 'http://localhost:3000?id='+id;
                         window.location.replace(url);
                 }); 
-           }else{
-                alert("Please login or sign in to iCha");
-           }
+           
              
         }
         function brands() {
@@ -224,7 +221,7 @@
         
         }
         $('input').on('ifToggled', function(event){
-             brandss();
+             brands();
         });
 
         $('#logout').click(function(){

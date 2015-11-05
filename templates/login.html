@@ -30,20 +30,20 @@
                 </div>
                 <div class="col-md-4">
                     <h3>New To iChat.mn?</h3>
-                    <form id="add-user" enctype="multipart/form-data">
+                    <form id="add-user" method="post" enctype="multipart/form-data">
                         <div class="form-group form-group-icon-left"><i class="fa fa-user input-icon input-icon-show"></i>
                             <label>Username</label>
-                            <input class="form-control" placeholder="e.g. John Doe" type="text" required id="reg_username"/>
+                            <input class="form-control" placeholder="e.g. John Doe" type="text"  id="rusername"/>
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
                             <label>Email</label>
-                            <input class="form-control" placeholder="e.g. johndoe@gmail.com" type="text" requierd id="reg-email" />
+                            <input class="form-control" placeholder="e.g. johndoe@gmail.com" type="text"  id="remail" />
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-lock input-icon input-icon-show"></i>
                             <label>Password</label>
-                            <input class="form-control" type="password" placeholder="my secret password" required id="reg-password"/>
+                            <input class="form-control" type="password" placeholder="my secret password" id="rpassword"/>
                         </div>
-                        <input class="btn btn-primary" type="submit" value="Sign up for iChat.mn" />
+                        <input id ="add" class="btn btn-primary" type="button" value="Sign up for iChat.mn" />
                     </form>
                 </div>
             </div>
@@ -68,13 +68,13 @@
                     }
             });
         });
-        $('#add-user').submit(function(){
+        $('#add').click(function(){
            $.post("user.php", {
-                email: $('#reg-email').val(),
-                username: $('#reg-username').val(),
-                password: $('#reg-password').val()
+                email: $('#remail').val(),
+                username: $('#rusername').val(),
+                password: $('#rpassword').val()
                 }, function (result) {
-                console.log(result);
+                window.location.replace("index.php");
             });
         });
 

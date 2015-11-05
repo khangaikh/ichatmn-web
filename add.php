@@ -1,5 +1,6 @@
 <?php
     require_once "config.php";
+    require_once 'includes/Twig/Autoloader.php';
  
     //$_SESSION = "Array ( [parseData] => Array ( [user] => Parse\ParseUser [_sessionToken:protected] => r:LAy74EsFuobzvlAQgmRdF00LV [serverData:protected] => Array ( [username] => admin ) [operationSet:protected] => Array ( ) [estimatedData:Parse\ParseObject:private] => Array ( [username] => admin ) [dataAvailability:Parse\ParseObject:private] => Array ( [sessionToken] => 1 [username] => 1 ) [className:Parse\ParseObject:private] => _User [objectId:Parse\ParseObject:private] => D6C1mdK86t [createdAt:Parse\ParseObject:private] => DateTime Object ( [date] => 2015-08-28 18:56:27.592000 [timezone_type] => 2 [timezone] => Z ) [updatedAt:Parse\ParseObject:private] => DateTime Object ( [date] => 2015-08-28 18:56:27.592000 [timezone_type] => 2 [timezone] => Z ) [hasBeenFetched:Parse\ParseObject:private] => 1 ) ) [count] => 1 ) ";
 
@@ -49,6 +50,73 @@
     $response->result = 'OK';
     $response->id = $db->lastInsertId();
 
-    header('Content-Type: application/json');
-    echo json_encode($response);
+    //header('Content-Type: application/json');
+    //echo json_encode($response);
+   $stmt = $db->prepare("SELECT * FROM zarlal");
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+
+    class Event {}
+    $events = array();
+
+    foreach($result as $row) {
+        $e = new Event();
+        $e->id = $row['ID'];
+        $e->topic = $row['topic'];
+        $e->date = $row['start'];
+        $e->category = $row['category'];
+        $e->location = $row['location'];
+        $e->status = $row['status'];
+        $e->image = $row['image'];
+        $e->desc_more = $row['desc_more'];
+        $events[] = $e;
+    }
+
+    $stmt = $db->prepare("SELECT * FROM category");
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+
+    class Cate {}
+    $categories = array();
+
+    foreach($result as $row) {
+        $e = new Cate();
+        $e->id = $row['ID'];
+        $e->name = $row['name'];
+        $categories[] = $e;
+    }
+    //register autoloader
+    Twig_Autoloader::register();
+    //loader for template files
+    $loader = new Twig_Loader_Filesystem('templates');
+    //twig instance
+    $twig = new Twig_Environment($loader, array(
+        'cache' => 'cache',
+    ));
+    //load template file
+    $twig->setCache(false);
+    $template = $twig->loadTemplate('index.html');
+    $user = null;
+
+    $num = count($events);
+
+    if($_GET){
+        if($_GET['cid']==0){
+            $template = $twig->loadTemplate('login.html');
+            echo $template->render(array('title' => 'iChat-Login'));
+        }
+    }else{
+        if($_SESSION){
+            if($_SESSION['user']){
+                $user = $_SESSION['user'];
+
+                echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>$user));
+            }else{
+                $template = $twig->loadTemplate('login.html');
+                echo $template->render(array('title' => 'iChat-Login'));}
+        }
+        else{
+            echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
+        }
+    }
 ?>

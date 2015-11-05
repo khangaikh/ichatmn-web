@@ -20,7 +20,7 @@
     $response = new Result();
     //$date = null;
     try {
-        $stmt = $db->prepare("SELECT * FROM users WHERE email=:email AND password=:password");
+        $stmt = $db->prepare("SELECT * FROM users WHERE email=:email AND pass=:password");
         $stmt->bindParam(':email', $_POST['email']);
         $stmt->bindParam(':password', $_POST['password']);
         $stmt->execute();

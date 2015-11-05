@@ -2,12 +2,15 @@
     require_once "config.php";
  
     //$date = null;
+    $email =  $_POST['email'];
+    $pass = $_POST['password'];
+    $user = $_POST['username'];
+
     try {
-        $stmt = $db->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password");
-        
-        $stmt->bindParam(':username', $_POST['username']);
-        $stmt->bindParam(':email', $_POST['email']);
-        $stmt->bindParam(':password', $_POST['password']);
+        $stmt = $db->prepare("INSERT INTO users (username, email, pass) VALUES (:username, :email, :password)");
+        $stmt->bindParam(':email',$user);
+        $stmt->bindParam(':email',$email);
+        $stmt->bindParam(':password',$pass);
         $stmt->execute();
        
     }
@@ -16,7 +19,6 @@
         // String.
         $response->message = $Exception->getCode( );
     }
-    session_start();
     $_SESSION['user'] = $_POST['email'];
     $response= $db->lastInsertId();
     echo $response;
