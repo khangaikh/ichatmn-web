@@ -38,6 +38,7 @@
     }else{
         $response->message = 0;
     }
-    
+    session_start();
+    $_SESSION['user'] = $_POST['email'];
     echo json_encode($response); 
 ?>

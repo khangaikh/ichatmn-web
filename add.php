@@ -1,7 +1,7 @@
 <?php
     require_once "config.php";
     require_once 'includes/Twig/Autoloader.php';
- 
+    session_start();
     //$_SESSION = "Array ( [parseData] => Array ( [user] => Parse\ParseUser [_sessionToken:protected] => r:LAy74EsFuobzvlAQgmRdF00LV [serverData:protected] => Array ( [username] => admin ) [operationSet:protected] => Array ( ) [estimatedData:Parse\ParseObject:private] => Array ( [username] => admin ) [dataAvailability:Parse\ParseObject:private] => Array ( [sessionToken] => 1 [username] => 1 ) [className:Parse\ParseObject:private] => _User [objectId:Parse\ParseObject:private] => D6C1mdK86t [createdAt:Parse\ParseObject:private] => DateTime Object ( [date] => 2015-08-28 18:56:27.592000 [timezone_type] => 2 [timezone] => Z ) [updatedAt:Parse\ParseObject:private] => DateTime Object ( [date] => 2015-08-28 18:56:27.592000 [timezone_type] => 2 [timezone] => Z ) [hasBeenFetched:Parse\ParseObject:private] => 1 ) ) [count] => 1 ) ";
 
     //$new = $_POST['loan'];
@@ -95,28 +95,24 @@
     ));
     //load template file
     $twig->setCache(false);
-    $template = $twig->loadTemplate('index.html');
+    $template = $twig->loadTemplate('main.html');
     $user = null;
 
     $num = count($events);
 
-    if($_GET){
-        if($_GET['cid']==0){
+    if(isset($_SESSION)){
+        if(isset($_SESSION['user'])){
+            $user = $_SESSION['user'];
+            echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>$user));
+        }else if(isset($_GET['login'])){
             $template = $twig->loadTemplate('login.html');
             echo $template->render(array('title' => 'iChat-Login'));
-        }
-    }else{
-        if($_SESSION){
-            if($_SESSION['user']){
-                $user = $_SESSION['user'];
-
-                echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>$user));
-            }else{
-                $template = $twig->loadTemplate('login.html');
-                echo $template->render(array('title' => 'iChat-Login'));}
         }
         else{
             echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
         }
+    }
+    else{
+        echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
     }
 ?>

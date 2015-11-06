@@ -97,17 +97,19 @@
                                             GO TO TRADE ROOM
                                        </a>
                                     </li>
+
                                     <li>
                                         {% if user %}
                                             <a class="popup-text" href="#search-dialog1" data-effect="mfp-zoom-out">
                                                 + Add topic
                                            </a>
                                        {% else %}
-                                            <a href="index.php?cid=0">
+                                            <a href="index.php?login">
                                                 + Add topic
                                            </a>
                                        {% endif %}
                                     </li>
+
                                     <li>
                                         {% if user %}
                                             <a href="user-profile.html">
@@ -119,18 +121,17 @@
                                        {% if user %}
                                             <a class="popup-text" href="#search-dialog1" data-effect="mfp-zoom-out">
                                                 <input id="user_name" type="hidden" value="{{user}}" />
-                                                <a href="user-profile.html">Hi, {{user}}</a>
+                                                <a href="logout.php">Hi, {{user}}</a>
                                            </a>
                                        {% else %}
                                              <input id="user_name" type="hidden" value="0" />
-                                            <a href="index.php?cid=0">
+                                            <a href="index.php?login">
                                                 Login | Signup
                                            </a>
                                        {% endif %}                                        
                                     </li>
-                                    {% if user %}
-                                        <li><a id="logout" href="#">Sign Out</a></li>
-                                    {% endif %}
+                                    
+                                   
                                 </ul>
                             </div>
                         </div>

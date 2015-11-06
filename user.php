@@ -19,6 +19,7 @@
         // String.
         $response->message = $Exception->getCode( );
     }
+    session_start();
     $_SESSION['user'] = $_POST['email'];
     $response= $db->lastInsertId();
     echo $response;
