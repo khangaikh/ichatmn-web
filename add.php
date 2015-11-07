@@ -20,7 +20,7 @@
         move_uploaded_file($_FILES["import"]["tmp_name"],
         "upload/" . $_FILES["import"]["name"]);
         $url = "upload/" . $_FILES["import"]["name"];
-        //echo "Stored in: " . "upload/" . $_FILES["import"]["name"];
+        echo "Stored in: " . "upload/" . $_FILES["import"]["name"];
     }
     
     class Result {}
@@ -45,14 +45,16 @@
         // PHP Fatal Error. Second Argument Has To Be An Integer, But PDOException::getCode Returns A
         // String.
         $response->message = $Exception->getCode( );
+        echo $Exception->getCode( );
     }
 
     $response->result = 'OK';
     $response->id = $db->lastInsertId();
 
     //header('Content-Type: application/json');
-    //echo json_encode($response);
-   $stmt = $db->prepare("SELECT * FROM zarlal");
+    echo json_encode($response);
+    /*
+    $stmt = $db->prepare("SELECT * FROM zarlal");
     $stmt->execute();
     $result = $stmt->fetchAll();
 
@@ -115,4 +117,5 @@
     else{
         echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
     }
+    */
 ?>
