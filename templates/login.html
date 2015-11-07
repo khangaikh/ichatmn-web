@@ -25,7 +25,7 @@
                             <label>Password</label>
                             <input class="form-control" type="password" placeholder="my secret password" id="password"/>
                         </div>
-                        <input class="btn btn-primary" type="button" value="Sign in" />
+                        <input class="btn btn-primary" type="button" value="Sign in"  id="signin" />
                     </form>
                 </div>
                 <div class="col-md-4">
@@ -54,7 +54,7 @@
     {{parent()}}
     <script type="text/javascript">
         
-        $('#login').click(function(){
+        $('#signin').click(function(){
            $.post("login.php", {
                 email: $('#email').val(),
                 password: $('#password').val()
