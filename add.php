@@ -52,8 +52,8 @@
     $response->id = $db->lastInsertId();
 
     //header('Content-Type: application/json');
-    echo json_encode($response);
-    /*
+    //echo json_encode($response);
+    
     $stmt = $db->prepare("SELECT * FROM zarlal");
     $stmt->execute();
     $result = $stmt->fetchAll();
@@ -117,5 +117,5 @@
     else{
         echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
     }
-    */
+    
 ?>
