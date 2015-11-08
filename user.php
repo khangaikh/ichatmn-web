@@ -8,7 +8,7 @@
 
     try {
         $stmt = $db->prepare("INSERT INTO users (username, email, pass) VALUES (:username, :email, :password)");
-        $stmt->bindParam(':email',$user);
+        $stmt->bindParam(':username',$user);
         $stmt->bindParam(':email',$email);
         $stmt->bindParam(':password',$pass);
         $stmt->execute();

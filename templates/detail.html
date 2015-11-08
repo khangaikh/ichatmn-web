@@ -1,0 +1,133 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+    
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="index.php">Зарлалууд</a>
+                </li>
+                <li class="active">{{zar.topic}}</li>
+            </ul>
+            <div class="booking-item-details">
+                <header class="booking-item-header">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h2 class="lh1em">{{zar.topic}}</h2>
+                            <p class="lh1em text-small"><i class="fa fa-map-marker"></i> {{zar.location}}</p>
+                            <ul class="list list-inline text-small">
+                                <li><a href="#"><i class="fa fa-calendar"></i> {{zar.start}}</a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-calendar"></i> {{zar.end}}</a>
+                                </li>
+                                <li><i class="fa fa-user"></i> {{zar.user}}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                           <input class="btn btn-primary btn-lg" type="button" onclick="generate({{zar.id}});" value="Chat now" />
+                        </div>
+                    </div>
+                </header>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="tabbable booking-details-tabbable">
+                            <ul class="nav nav-tabs" id="myTab">
+                                <li class="active"><a href="#tab-1" data-toggle="tab"><i class="fa fa-camera"></i>Зургууд</a>
+                                </li>
+
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab-1">
+                                    <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
+                                        <img src="{{zar.image}}" alt="Image Alternative text" title="hotel PORTO BAY SERRA GOLF living room" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="booking-item-meta">
+                            <h2 class="lh1em mt40"></h2>
+                            <h3>97% <small >зочин санал болгосон байна.</small></h3>
+                            <div class="booking-item-rating">
+                                <ul class="icon-list icon-group booking-item-rating-stars">
+                                    <li><i class="fa fa-star"></i>
+                                    </li>
+                                    <li><i class="fa fa-star"></i>
+                                    </li>
+                                    <li><i class="fa fa-star"></i>
+                                    </li>
+                                    <li><i class="fa fa-star"></i>
+                                    </li>
+                                    <li><i class="fa fa-star"></i>
+                                    </li>
+                                </ul><span class="booking-item-rating-number"><b >4.7</b> of 5 
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                            <p style="text-align: justify;">
+                                {{zar.desc_more}}
+                            </p>
+                            </div>
+                            <div class="col-md-6 active in" id="google-map-tab">
+                                <div id="map-canvas" style="width:100%; height:280px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gap"></div>
+                <div id="disqus_thread"></div>
+                <input type="hidden" id="zarid" value="{{zar.id}}" />
+                <input type="hidden" id="zartopic" value="{{zar.topic}}" />
+                <input type="hidden" id="zaruser" value="{{zar.user}}" />
+                <script>
+                /**
+                * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+                */
+                /*
+                var disqus_config = function () {
+                this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+                */
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+
+                s.src = '//ichatmn.disqus.com/embed.js';
+
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                
+            </div>
+            <div class="gap gap-small"></div>
+        </div>
+
+{% endblock %}
+{% block scripting %}
+    {{parent()}}
+    <script type="text/javascript">
+        function generate(id){
+            //alert("1");
+            var name = $("#zaruser").val();
+            var topic = $("#zartopic").text();
+               $.post("generate.php", {
+                    cid:id,
+                    user: name,
+                    topic: topic 
+                    }, function (result) {
+                        var arr = result.split('"');
+                        var url = 'http://localhost:3000?id='+id;
+                        window.location.replace(url);
+                });     
+        }
+    </script>
+{% endblock %}

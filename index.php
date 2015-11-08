@@ -11,7 +11,7 @@
     $events = array();
     foreach($result as $row) {
         $e = new Event();
-        $e->id = $row['ID'];
+        $e->id = $row['id'];
         $e->topic = $row['topic'];
         $e->date = $row['start'];
         $e->category = $row['category'];
@@ -53,13 +53,31 @@
         }else if(isset($_GET['login'])){
             $template = $twig->loadTemplate('login.html');
             echo $template->render(array('title' => 'iChat-Login'));
+        }else if(isset($_GET['detail'])){
+            $template = $twig->loadTemplate('detail.html');
+            $stmt = $db->prepare("SELECT * FROM zarlal WHERE id=:id");
+            $stmt->bindParam(':id',$_GET['detail']);
+            $stmt->execute();
+            $zar = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo $template->render(array('title' => 'iChat-detail', 'zar' => $zar));
         }
         else{
             echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
         }
     }
     else{
-        echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
+        if(isset($_GET['detail'])){
+            $template = $twig->loadTemplate('detail.html');
+            $stmt = $db->prepare("SELECT * FROM zarlal WHERE id=:id");
+            $stmt->bindParam(':id',$_GET['detail']);
+            $stmt->execute();
+            $zar = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo $template->render(array('title' => 'iChat-detail', 'zar' => $zar));
+            echo $template->render(array('title' => 'iChat-detail'));
+        }else{
+            echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
+        }
+       
     }
     
 ?>
