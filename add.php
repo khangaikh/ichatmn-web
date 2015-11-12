@@ -63,7 +63,7 @@
 
     foreach($result as $row) {
         $e = new Event();
-        $e->id = $row['ID'];
+        $e->id = $row['id'];
         $e->topic = $row['topic'];
         $e->date = $row['start'];
         $e->category = $row['category'];
