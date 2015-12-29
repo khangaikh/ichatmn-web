@@ -32,6 +32,6 @@
     }
     session_start();
     $_SESSION['user'] = $_POST['email'];
-    $response= $db->lastInsertId();
-    //echo $response;*/
+    $response= $pieces[2];
+    echo $response;
 ?>
