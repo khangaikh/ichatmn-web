@@ -1,6 +1,4 @@
-
 {% extends "base.html" %}
-
 {% block content %}
     
         <div class="container">
@@ -72,7 +70,7 @@
                             <div class="col-md-6">
                             <p style="text-align: justify;">
                                 {{zar.desc_more}}
-                            </p>
+                            </p>    
                             </div>
                             <div class="col-md-6 active in" id="google-map-tab">
                                 <div id="map-canvas" style="width:100%; height:280px;"></div>
@@ -85,28 +83,25 @@
                 <input type="hidden" id="zarid" value="{{zar.id}}" />
                 <input type="hidden" id="zartopic" value="{{zar.topic}}" />
                 <input type="hidden" id="zaruser" value="{{zar.user}}" />
-                <script>
-                /**
-                * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-                */
-                /*
-                var disqus_config = function () {
-                this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                };
-                */
-                (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-
-                s.src = '//ichatmn.disqus.com/embed.js';
-
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-                
+                {% if user %}
+                    <h5>Please comment</h5>
+                    <textarea id="comment" rows="5" style="width:100%" >
+                        
+                    </textarea>
+                    <input class="btn btn-primary btn-lg" type="button" onclick="commentIt({{zar.id}});" value="Comment now" />
+                {%else%}
+                    <h5>Please <a href="index.php?login">login</a> to comment</h5>
+                {%endif%}
+                <br />
+                <br />
+                <ul id="comments" class="list text-large">
+                    {% for comment in comments %}
+                        <li>
+                            <h5>{{comment.person}} : {{comment.dateInserted}}</h5>
+                            <p style="padding-left:23px ">{{comment.comment}}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
             <div class="gap gap-small"></div>
         </div>
@@ -129,5 +124,26 @@
                         window.location.replace(url);
                 });     
         }
+        function commentIt(id){
+            var name = $("#comment").val();
+            //alert("1");
+            $.ajax({
+                url: 'comment.php',
+                dataType: 'text',
+                type: 'post',
+                data: {data:id, comment:name},
+                success: function( data, textStatus, jQxhr ){
+                    console.log(data);
+                    var arr = data.split('>');
+                    var obj = $.parseJSON(arr[1]);
+                    $("#comments").prepend('<li><h5>'+obj.user+' just now:</h5> <p style="padding-left:23px ">'+ obj.comment+'</p></li>');
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                }
+            });     
+        }
+
+
     </script>
 {% endblock %}

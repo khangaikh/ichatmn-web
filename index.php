@@ -46,23 +46,27 @@
     $user = null;
     $num = count($events);
     
-    if(isset($_SESSION)){
-        if(isset($_SESSION['user'])){
-            $user = $_SESSION['user'];
-            echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>$user));
-        }else if(isset($_GET['login'])){
-            $template = $twig->loadTemplate('login.html');
-            echo $template->render(array('title' => 'iChat-Login'));
+    if(isset($_SESSION['user'])){
+        $user =$_SESSION['user'];
+        if(isset($_GET['logout'])){
+            session_unset();
+            session_destroy();  
+            echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
         }else if(isset($_GET['detail'])){
             $template = $twig->loadTemplate('detail.html');
             $stmt = $db->prepare("SELECT * FROM zarlal WHERE id=:id");
             $stmt->bindParam(':id',$_GET['detail']);
             $stmt->execute();
             $zar = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo $template->render(array('title' => 'iChat-detail', 'zar' => $zar));
+
+            $stmt = $db->prepare("SELECT * FROM comments WHERE zarlalId=:id");
+            $stmt->bindParam(':id',$_GET['detail']);
+            $stmt->execute();
+            $comments = $stmt->fetchAll();
+            echo $template->render(array('title' => 'iChat-detail', 'zar' => $zar, 'comments' =>$comments,'user'=>$user));
         }
         else{
-            echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
+            echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>$user));
         }
     }
     else{
@@ -72,9 +76,16 @@
             $stmt->bindParam(':id',$_GET['detail']);
             $stmt->execute();
             $zar = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo $template->render(array('title' => 'iChat-detail', 'zar' => $zar));
-            echo $template->render(array('title' => 'iChat-detail'));
-        }else{
+            $stmt = $db->prepare("SELECT * FROM comments WHERE zarlalId=:id");
+            $stmt->bindParam(':id',$_GET['detail']);
+            $stmt->execute();
+            $comments = $stmt->fetchAll();
+            echo $template->render(array('title' => 'iChat-detail', 'zar' => $zar, 'comments' =>$comments));
+        }else if(isset($_GET['login'])){
+            $template = $twig->loadTemplate('login.html');
+             echo $template->render(array('title' => 'iChat-detail'));
+        }
+        else{
             echo $template->render(array('title' => 'iChat','categories'=>$categories,'zars'=>$events,'num' =>$num, 'user'=>null));
         }
        
