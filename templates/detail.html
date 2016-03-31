@@ -114,6 +114,8 @@
             //alert("1");
             var name = $("#zaruser").val();
             var topic = $("#zartopic").text();
+            var url = 'http://192.160.0.83:8080/?id='+id;
+            /*            window.location.replace(url);
                $.post("generate.php", {
                     cid:id,
                     user: name,
@@ -122,7 +124,7 @@
                         var arr = result.split('"');
                         var url = 'http://192.160.0.83:8080/?id='+id;
                         window.location.replace(url);
-                });     
+                }); */    
         }
         function commentIt(id){
             var name = $("#comment").val();
