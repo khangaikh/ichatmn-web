@@ -115,6 +115,7 @@
             var name = $("#zaruser").val();
             var topic = $("#zartopic").text();
             var url = 'http://192.160.0.83:8080/?id='+id;
+            window.location.replace(url);
             /*            window.location.replace(url);
                $.post("generate.php", {
                     cid:id,
@@ -123,7 +124,7 @@
                     }, function (result) {
                         var arr = result.split('"');
                         var url = 'http://192.160.0.83:8080/?id='+id;
-                        window.location.replace(url);
+                       
                 }); */    
         }
         function commentIt(id){
