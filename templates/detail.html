@@ -115,7 +115,14 @@
             var name = $("#zaruser").val();
             var topic = $("#zartopic").text();
             var url = 'http://192.160.0.83:8080/?id='+id;
-            window.location.replace(url);
+            var win = window.open(url, '_blank');
+            if(win){
+                //Browser has allowed it to be opened
+                win.focus();
+            }else{
+                //Broswer has blocked it
+                alert('Please allow popups for this site');
+            }
             /*            window.location.replace(url);
                $.post("generate.php", {
                     cid:id,
