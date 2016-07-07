@@ -20,8 +20,8 @@
     $response = new Result();
     //$date = null;
     try {
-        $stmt = $db->prepare("SELECT * FROM users WHERE email=:email AND pass=:password");
-        $stmt->bindParam(':email', $_POST['email']);
+        $stmt = $db->prepare("SELECT * FROM users WHERE username=:username AND pass=:password");
+        $stmt->bindParam(':username', $_POST['email']);
         $stmt->bindParam(':password', $_POST['password']);
         $stmt->execute();
         $results = $stmt->fetchAll();
@@ -32,13 +32,13 @@
         $response = $Exception->getCode( );
     }
     if(count($results)>0){
+        session_start();
         $_SESSION['user'] = $_POST['email'];
         //$_SESSION['secret'] = $encrypted;
         $response->message = 1;
     }else{
         $response->message = 0;
     }
-    session_start();
-    $_SESSION['user'] = $_POST['email'];
+    
     echo json_encode($response); 
 ?>
