@@ -1,174 +1,210 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container">
-            <div class="mfp-with-anim mfp-hide mfp-dialog mfp-search-dialog" id="search-dialog">
-                <h3>Search for topics</h3>
-                <form id="searchForm">
-                    <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-highlight"></i>
-                        <label>Chat location?</label>
-                        <input class="typeahead form-control" placeholder="City, Airport, Point of Interest, Hotel Name or U.S. Zip Code" type="text" name="locaton" />
-                    </div>
-                    <div class="input-daterange" data-date-format="M d, D">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                                    <label>From</label>
-                                    <input class="form-control" name="start" type="text" />
-                                </div>
+    <div class="container">
+        <div class="mfp-with-anim mfp-hide mfp-dialog mfp-search-dialog" id="search-dialog">
+            <h3>Search for topics</h3>
+            <form id="searchForm">
+                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-highlight"></i>
+                    <label>Chat location?</label>
+                    <input class="typeahead form-control" placeholder="City, Airport, Point of Interest, Hotel Name or U.S. Zip Code" type="text" name="locaton" />
+                </div>
+                <div class="input-daterange" data-date-format="M d, D">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
+                                <label>From</label>
+                                <input class="form-control" name="start" type="text" />
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
-                                    <label>To</label>
-                                    <input class="form-control" name="end" type="text" />
-                                </div>
-                            </div>
-                           
-                            <div class="col-md-3">
-                                <div class="form-group form-group-lg form-group-select-plus">
-                                    <label>Chatter number</label>
-                                    <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                                        <label class="btn btn-primary active">
-                                            <input type="radio" name="options" />1</label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" name="options" />2</label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" name="options" />3</label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" name="options" />3+</label>
-                                    </div>
-                                    <select class="form-control hidden">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option selected="selected">4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                        <option>13</option>
-                                        <option>14</option>
-                                    </select>
-                                </div>
-                            </div>
-
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-group-lg form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-highlight"></i>
+                                <label>To</label>
+                                <input class="form-control" name="end" type="text" />
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-3">
+                            <div class="form-group form-group-lg form-group-select-plus">
+                                <label>Chatter number</label>
+                                <div class="btn-group btn-group-select-num" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" />1</label>
+                                    <label class="btn btn-primary">
+                                        <input type="radio" name="options" />2</label>
+                                    <label class="btn btn-primary">
+                                        <input type="radio" name="options" />3</label>
+                                    <label class="btn btn-primary">
+                                        <input type="radio" name="options" />3+</label>
+                                </div>
+                                <select class="form-control hidden">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option selected="selected">4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                    <option>13</option>
+                                    <option>14</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
-                    <button class="btn btn-primary btn-lg" type="submit">Search for topics</button>
+                </div>
+                <button class="btn btn-primary btn-lg" type="submit">Search for topics</button>
+            </form>
+        </div>
+        <h3 class="booking-title">{{ num }} topics <small><a class="popup-text" href="#search-dialog" data-effect="mfp-zoom-out">Change search</a></small></h3>
+        <div class="row">
+            <div class="col-md-3">
+                <form id="search">
+                    <aside class="booking-filters booking-filters-white">
+                        <h3>Filter By:</h3>
+                        <ul class="list booking-filters-list">
+                            <li>
+                                <h5 class="booking-filters-title">Category</h5>
+                                {% for category in categories %}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input class="i-check" name="category" type="checkbox" value="{{category.name}}" />{{category.name}}
+                                        </label>
+                                    </div> 
+                                {% endfor %}
+                            </li>
+                            <!--
+                            <li>
+                                <h5 class="booking-filters-title">Most</h5>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" />Most reviewed
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" />Most chatted
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" />Recently added
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="i-check" type="checkbox" />Your favorite
+                                    </label>
+                                </div>
+                            </li>-->
+                        </ul>
+                    </aside>
                 </form>
             </div>
-            <h3 class="booking-title">{{ num }} topics <small><a class="popup-text" href="#search-dialog" data-effect="mfp-zoom-out">Change search</a></small></h3>
-            <div class="row">
-                <div class="col-md-3">
-                    <form id="search">
-                        <aside class="booking-filters booking-filters-white">
-                            <h3>Filter By:</h3>
-                            <ul class="list booking-filters-list">
-                                <li>
-                                    <h5 class="booking-filters-title">Category</h5>
-                                    {% for category in categories %}
-                                        <div class="checkbox">
-                                            <label>
-                                                <input class="i-check" name="category" type="checkbox" value="{{category.name}}" />{{category.name}}
-                                            </label>
-                                        </div> 
-                                    {% endfor %}
-                                </li>
-                                <!--
-                                <li>
-                                    <h5 class="booking-filters-title">Most</h5>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" />Most reviewed
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" />Most chatted
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" />Recently added
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input class="i-check" type="checkbox" />Your favorite
-                                        </label>
-                                    </div>
-                                </li>-->
-                            </ul>
-                        </aside>
-                    </form>
-                </div>
-                <div class="col-md-9">
-                    <div class="nav-drop booking-sort">
-                        <h5 class="booking-sort-title"><a href="#">Sort: Aviability<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
-                        <ul class="nav-drop-menu">
-                            <li><a href="#">Date added</a>
-                            </li>
-                            <li><a href="#">Chatter number</a>
-                            </li>
-                            <li><a href="#">Username</a>
-                            </li>
-                            <li><a href="#">Number of Reviews</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <ul id="events" class="booking-list">
-                         {% for zar in zars %}
-                        <li>
-                            <a class="booking-item" href="index.php?detail={{zar.id}}">
-                               
-                                    <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="booking-item-img-wrap">
-                                            <img src="{{zar.image}}" alt="{{zar.id}}" title="LHOTEL PORTO BAY SAO PAULO suite lhotel living room" />
-                                            <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{zar.id}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="booking-item-rating">
-                                            <ul class="icon-group booking-item-rating-stars">
-                                                <li><i class="fa fa-star"></i>
-                                                </li>
-                                                <li><i class="fa fa-star"></i>
-                                                </li>
-                                                <li><i class="fa fa-star"></i>
-                                                </li>
-                                                <li><i class="fa fa-star"></i>
-                                                </li>
-                                                <li><i class="fa fa-star-o"></i>
-                                                </li>
-                                            </ul><span class="booking-item-rating-number"><b >3.9</b> of 5</span><small>(1213 reviews)</small>
-                                        </div>
-                                        <h5 class="booking-item-title" id="topic">{{ zar.topic }}</h5>
-                                        <small class="booking-item-last-booked">{{ zar.desc_more }}  </small>
-                                        <p class="booking-item-address"><i class="fa fa-tag"></i> {{ zar.category }}</p>
-                                        <p class="booking-item-address"><i class="fa fa-map-marker"></i> {{ zar.location}}</p>
-                                        <small class="booking-item-last-booked">{{ zar.date }}  </small>
-                                    </div>
-                                    <div class="col-md-3"><span class="booking-item-price-from"># chatter </span><span class="booking-item-price">0 </span><span></span><br/><input class="btn btn-primary" type="button" onclick="generate({{zar.id}});" value="Chat now" />
-                                    </div>
-                                </div>
-                                
-                            </a>
+            <div class="col-md-9">
+                <div class="nav-drop booking-sort">
+                    <h5 class="booking-sort-title"><a href="#">Sort: Aviability<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                    <ul class="nav-drop-menu">
+                        <li><a href="#">Date added</a>
+
                         </li>
-                       {% endfor %}
+                        <li><a href="#">Chatter number</a>
+                        </li>
+                        <li><a href="#">Username</a>
+                        </li>
+                        <li><a href="#">Number of Reviews</a>
+                        </li>
                     </ul>
                 </div>
+                <ul id="events" class="booking-list">
+                     {% for zar in zars %}
+                    <li>
+                        <a class="booking-item" href="index.php?detail={{zar.id}}">
+                           
+                                <div class="row">
+                                <div class="col-md-3">
+                                    <div class="booking-item-img-wrap">
+                                        <img src="{{zar.image}}" alt="{{zar.id}}" title="LHOTEL PORTO BAY SAO PAULO suite lhotel living room" />
+                                        <div class="booking-item-img-num"><i class="fa fa-picture-o"></i>{{zar.id}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="booking-item-rating">
+                                        <ul class="icon-group booking-item-rating-stars">
+                                            <li><i class="fa fa-star"></i>
+                                            </li>
+                                            <li><i class="fa fa-star"></i>
+                                            </li>
+                                            <li><i class="fa fa-star"></i>
+                                            </li>
+                                            <li><i class="fa fa-star"></i>
+                                            </li>
+                                            <li><i class="fa fa-star-o"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <h5 class="booking-item-title" id="topic">{{ zar.topic }}</h5>
+                                    <small class="booking-item-last-booked">{{ zar.desc_more }}  </small>
+                                    <p class="booking-item-address"><i class="fa fa-tag"></i> {{ zar.category }}</p>
+                                    <p class="booking-item-address"><i class="fa fa-map-marker"></i> {{ zar.location}}</p>
+                                    <small class="booking-item-last-booked">{{ zar.date }}  </small>
+                                </div>
+                                <div class="col-md-3">
+                                    {% if zar.logged == '1' %}
+                                        <span class="booking-item-price-from"># Seller is avialable </span>
+                                        <br />
+                                        <i class="fa fa-check-circle fa-3x"  style="color:green"></i> 
+                                    {%else%}
+                                        <span class="booking-item-price-from"># Seller is NOT avialable </span>
+                                        <br />
+                                        <i class="fa fa-times-circle fa-3x"></i>
+                                    {%endif%}
+                                    <br /><br />
+                                    
+                                    {% if zar.chatter < 2%}
+                                        {% if user == zar.user %}
+                                            {% if zar.chatter == 1 and  zar.logged == 0 %}
+                                                <input class="btn btn-primary" disabled type="button" onclick="generate({{zar.id}});" value="Waiting for Seller" />
+                                            {% else %}
+                                                <input class="btn btn-primary" type="button" onclick="generate1({{zar.id}});" value="Chat as Buyer" />    
+                                            {% endif %}
+                                            
+                                        {% else %}
+                                            <input class="btn btn-primary" type="button" onclick="generate1({{zar.id}});" value="Chat as Seller" />
+                                        {% endif %}
+                                    {% else %}
+                                         <input class="btn btn-primary" disabled type="button" onclick="#" value="ROOM FULL" />
+                                    {% endif %}
+
+                                    
+                                </div>
+                            </div>
+                            
+                        </a>
+                    </li>
+                   {% endfor %}
+                </ul>
             </div>
-            <div class="gap"></div>
         </div>
+        <div class="gap"></div>
+    </div>
 {% endblock %}
 {% block scripting %}
 {{parent()}}
     <script type="text/javascript">
+
+        function encode(string) {
+            var number = "0x";
+            var length = string.length;
+            for (var i = 0; i < length; i++)
+                number += string.charCodeAt(i).toString(16);
+            return number;
+        }   
         function generate(id){
             //alert("1");
             var name = $("#user_name").val();
@@ -179,7 +215,27 @@
                     topic: topic 
                     }, function (result) {
                         var arr = result.split('"');
-                        var url = 'http://192.168.0.83:8080/?id='+id;
+                        var str = id + '***'+'buyer';
+                        var strnum = encode(str);
+                        var url = 'http://192.168.0.83:8080/seller?id='+id+'crypt='+strnum;
+                        window.location.replace(url);
+                }); 
+           
+             
+        }
+        function generate1(id){
+            //alert("1");
+            var name = $("#user_name").val();
+            var topic = $("#topic").text();
+               $.post("generate.php", {
+                    cid:id,
+                    user: name,
+                    topic: topic 
+                    }, function (result) {
+                        var arr = result.split('"');
+                        var str = id + '***'+'seller';
+                        var strnum = encode(str);
+                        var url = 'http://192.168.0.83:8080/seller?id='+id+'crypt='+strnum;
                         window.location.replace(url);
                 }); 
            

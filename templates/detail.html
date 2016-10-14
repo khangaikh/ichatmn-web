@@ -22,7 +22,15 @@
                             </ul>
                         </div>
                         <div class="col-md-3">
-                           <input class="btn btn-primary btn-lg" type="button" onclick="generate({{zar.id}});" value="Chat now" />
+                            {% if zar.chatter <2%}
+                                {% if user == zar.user %}
+                                    <input class="btn btn-primary" type="button" onclick="generate({{zar.id}});" value="Chat as Buyer" />
+                                {% else %}
+                                    <input class="btn btn-primary" type="button" onclick="generate1({{zar.id}});" value="Chat as Seller" />
+                                {% endif %}
+                            {% else %}
+                                 <input class="btn btn-primary" disabled type="button" onclick="#" value="ROOM FULL" />
+                            {% endif %}
                         </div>
                     </div>
                 </header>
@@ -110,11 +118,21 @@
 {% block scripting %}
     {{parent()}}
     <script type="text/javascript">
+        function encode(string) {
+            var number = "0x";
+            var length = string.length;
+            for (var i = 0; i < length; i++)
+                number += string.charCodeAt(i).toString(16);
+            return number;
+        } 
         function generate(id){
             //alert("1");
             var name = $("#zaruser").val();
             var topic = $("#zartopic").text();
-            var url = 'http://127.0.0.1:8080/?id='+id;
+            var str = id + '***'+'buyer'+'***'+topic;
+            var strnum = encode(str);
+            console.log(strnum);
+            var url = 'http://localhost:8080/?id='+id+'&item='+strnum;
             var win = window.open(url, '_blank');
             if(win){
                 //Browser has allowed it to be opened
@@ -123,16 +141,24 @@
                 //Broswer has blocked it
                 alert('Please allow popups for this site');
             }
-            /*            window.location.replace(url);
-               $.post("generate.php", {
-                    cid:id,
-                    user: name,
-                    topic: topic 
-                    }, function (result) {
-                        var arr = result.split('"');
-                        var url = 'http://192.160.0.83:8080/?id='+id;
-                       
-                }); */    
+               
+        }
+        function generate1(id){
+            var name = $("#zaruser").val();
+            var topic = $("#zartopic").text();
+            var str = id + '***'+'seller'+'***'+topic;
+            console.log(strnum);
+            var strnum = encode(str);
+            var url = 'http://localhost:8080/?id='+id+'&item='+strnum;
+            var win = window.open(url, '_blank');
+            if(win){
+                //Browser has allowed it to be opened
+                win.focus();
+            }else{
+                //Broswer has blocked it
+                alert('Please allow popups for this site');
+            } 
+             
         }
         function commentIt(id){
             var name = $("#comment").val();

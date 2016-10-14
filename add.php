@@ -29,7 +29,7 @@
     $date = date('Y-m-d H:i', time());
     //$date = null;
     try {
-        $stmt = $db->prepare("INSERT INTO zarlal (topic, start, end, category, desc_more, status, location, image) VALUES (:topic, :start, :end, :category, :desc_more, :status, :location, :image)");
+        $stmt = $db->prepare("INSERT INTO zarlal (topic, start, end, category, desc_more, status, location, image, logged) VALUES (:topic, :start, :end, :category, :desc_more, :status, :location, :image, :logged)");
         
         $stmt->bindParam(':topic', $_POST['name']);
         $stmt->bindParam(':start', $_POST['start']);
@@ -38,6 +38,7 @@
         $stmt->bindParam(':desc_more', $_POST['desc_more']);
         $stmt->bindParam(':image', $url);
         $stmt->bindParam(':location', $_POST['location']);
+        $stmt->bindValue(':logged', 0);
         $stmt->execute();
        
     }

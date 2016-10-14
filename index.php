@@ -12,6 +12,8 @@
     foreach($result as $row) {
         $e = new Event();
         $e->id = $row['id'];
+        $e->logged = $row['logged'];
+        $e->chatter = $row['chatter'];
         $e->topic = $row['topic'];
         $e->date = $row['start'];
         $e->category = $row['category'];

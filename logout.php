@@ -21,6 +21,8 @@
         $e = new Event();
         $e->id = $row['id'];
         $e->topic = $row['topic'];
+        $e->logged = $row['logged'];
+        $e->chatter = $row['chatter'];
         $e->date = $row['start'];
         $e->category = $row['category'];
         $e->location = $row['location'];
