@@ -23,6 +23,7 @@
         $e->desc_more = $row['desc_more'];
         $events[] = $e;
     }
+
     $stmt = $db->prepare("SELECT * FROM category");
     $stmt->execute();
     $result = $stmt->fetchAll();
@@ -48,6 +49,8 @@
     $user = null;
     $num = count($events);
     
+   
+
     if(isset($_SESSION['user'])){
         $user =$_SESSION['user'];
         if(isset($_GET['logout'])){
