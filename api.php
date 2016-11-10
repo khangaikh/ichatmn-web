@@ -2,9 +2,9 @@
     
     set_time_limit (0);
 
-    $address = '127.0.0.1';
+    $address = '192.168.10.110';
 
-    $port = 8889;
+    $port = 8880;
     $con = 1;
     $word = "";
 
@@ -16,14 +16,24 @@
     while ($con == 1)
     {
         $client = socket_accept($sock);
-        $input = socket_read($client, 2024);
-
+        $input = socket_read($client, 4000);
+       
         
+        echo "KDS is recieving information";
         $input = trim($input);
 
-        echo $input;
+        if (strpos($input, 'key') !== false) {
+            echo 'true';
+            $pieces = explode(":", $input);
+            echo $pieces[0]; // piece1
+            echo $pieces[1]; // piece
+        }
+        
+        if (!file_exists("upload"))
+        {
+           mkdir("upload", 0777, true);
+        }
 
-        socket_write($sock,"Hello");
 
         if ($input == 'exit') 
         {

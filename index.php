@@ -21,6 +21,7 @@
         $e->status = $row['status'];
         $e->image = $row['image'];
         $e->desc_more = $row['desc_more'];
+        $e->user= $row['user'];
         $events[] = $e;
     }
 

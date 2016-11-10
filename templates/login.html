@@ -14,6 +14,10 @@
                             <label>Username</label>
                             <input class="form-control" placeholder="e.g. johndoe@gmail.com" type="text" id="username"/>
                         </div>
+                        <div class="form-group form-group-icon-left"><i class="fa fa-check input-icon input-icon-show"></i>
+                            <label>Background image</label>
+                            <input class="form-control" placeholder="Paste your image link" type="text" id="bg1"/>
+                        </div>
                         <div id="patternHolder1" class="pattern-holder patt-holder">
 
                         </div>
@@ -27,6 +31,10 @@
                             <label>Username</label>
                             <input class="form-control" placeholder="e.g. John Doe" type="text"  id="rusername"/>
                         </div>
+                        <div class="form-group form-group-icon-left"><i class="fa fa-check input-icon input-icon-show"></i>
+                            <label>Background image</label>
+                            <input class="form-control" placeholder="Paste your image link" type="text" id="bg2"/>
+                        </div>
                         <div id="patternHolder" class="pattern-holder patt-holder">
 
                         </div>
@@ -39,4 +47,16 @@
 {% endblock %}
 {% block scripting %}
     {{parent()}}
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $('#bg1').on('paste', function() {
+                setTimeout(function () { 
+                    var user_link = $(this).val();
+                    console.log(user_link);
+                    $("#patternHolder1").css('background-image', 'url(' + user_link + ')');  
+                }, 100);
+            });
+        });
+        
+    </script>
 {% endblock %}
