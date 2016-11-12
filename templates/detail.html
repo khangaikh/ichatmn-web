@@ -26,7 +26,9 @@
                                 <input class="btn btn-primary" disabled type="button" onclick="#" value="ROOM FULL" />
                             {%else%}
                                 {% if user == zar.user %}
-                                    {% if zar.chatter == 1 and zar.logged == 0 %}
+                                    {% if zar.chatter == 0 and zar.logged == 0 %}
+                                        <input class="btn btn-primary" type="button" onclick="generate1({{zar.id}});" value="Chat as Seller" />
+                                    {% elseif zar.chatter == 1 and zar.logged == 0 %}
                                         <input class="btn btn-primary" type="button" onclick="generate1({{zar.id}});" value="Chat as Seller" />
                                     {% else %}
                                         <input class="btn btn-primary" disabled type="button" onclick="#" value="You ara already in" />
@@ -35,6 +37,8 @@
                                     {% if zar.chatter == 0 and zar.logged == 0 %}
                                         <input class="btn btn-primary" type="button" onclick="generate({{zar.id}});" value="Chat as Buyer" />
                                     {% elseif zar.chatter == 0 and zar.logged == 1 %}
+                                         <input class="btn btn-primary" type="button" onclick="generate({{zar.id}});" value="Chat as Buyer" />
+                                    {% elseif zar.chatter == 1 and zar.logged == 1 %}
                                          <input class="btn btn-primary" type="button" onclick="generate({{zar.id}});" value="Chat as Buyer" />
                                     {% elseif zar.chatter == 1 and zar.logged == 0 %}
                                         <input class="btn btn-primary" disabled type="button" onclick="#" value="Waiting for seller" />
