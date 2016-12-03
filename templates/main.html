@@ -209,7 +209,6 @@
 {{parent()}}
     <script type="text/javascript">
          var ip_run = "192.168.10.107";
-
         function encode(string) {
             var number = "0x";
             var length = string.length;
@@ -255,13 +254,11 @@
         }
         function brands() {
             var brands = [];
-
             $('#search input').each(function (index, value) {
                 if ($(this).is(':checked')) {
                     brands.push($(this).val());
                 }
             });
-
             if(brands.length != 0){
                 $.ajax({
                     url: 'search.php',
@@ -291,7 +288,6 @@
         $('input').on('ifToggled', function(event){
              brands();
         });
-
         $('#logout').click(function(){
             alert("Та дахин ирээрэй");
              $.post("logout.php", {
@@ -301,5 +297,4 @@
         });
     </script>
 {% endblock %}
-
 

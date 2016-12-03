@@ -134,7 +134,7 @@
     {{parent()}}
     <script type="text/javascript">
 
-        var ip_run = "192.168.10.107";
+        var ip_run = "192.168.1.7";
 
         function encode(string) {
             var number = "0x";
@@ -190,6 +190,7 @@
                     console.log(data);
                     var arr = data.split('>');
                     var obj = $.parseJSON(arr[1]);
+		    $("#comment").val("");
                     $("#comments").prepend('<li><h5>'+obj.user+' just now:</h5> <p style="padding-left:23px ">'+ obj.comment+'</p></li>');
                 },
                 error: function( jqXhr, textStatus, errorThrown ){
